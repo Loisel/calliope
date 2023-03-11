@@ -128,7 +128,7 @@ def run_plan(
             solver_io=solver_io,
             solver_options=solver_options,
             save_logs=save_logs,
-            warmstart=warmstart,
+            # warmstart=warmstart,
             opt=opt,
         )
 
@@ -149,7 +149,7 @@ def run_plan(
         if termination in ["optimal", "feasible"]:
             results = backend.get_result_array(backend_model, model_data)
             results.attrs["termination_condition"] = termination
-            if "persistent" in opt.name and persistent is True:
+            if hasattr(opt, "name") and "persistent" in opt.name and persistent is True:
                 results.attrs["objective_function_value"] = opt.get_model_attr("ObjVal")
             else:
                 results.attrs["objective_function_value"] = backend_model.obj()

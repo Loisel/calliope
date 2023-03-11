@@ -13,7 +13,6 @@ import pandas as pd
 import xarray as xr
 
 import pyomo.core as po  # pylint: disable=import-error
-from pyomo.opt import SolverFactory  # pylint: disable=import-error
 
 # pyomo.environ is needed for pyomo solver plugins
 import pyomo.environ as pe  # pylint: disable=unused-import,import-error
@@ -199,7 +198,7 @@ def solve_model(
     Returns a Pyomo results object
     """
     if opt is None:
-        opt = SolverFactory(solver, solver_io=solver_io)
+        opt = pe.SolverFactory(solver)#, solver_io=solver_io)
         if "persistent" in solver:
             solve_kwargs.update({"save_results": False, "load_solutions": False})
             opt.set_instance(backend_model)
